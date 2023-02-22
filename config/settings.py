@@ -2,8 +2,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-# import ../
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,12 +26,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_api_key',
     'djoser',
     'cities_light',
     'drf_yasg',
+    'drf_api_logger',
     'corsheaders',
     'src.profiles',
     'src.likes',
+    'src.chat',
 ]
 
 MIDDLEWARE = [
@@ -43,9 +44,12 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'config.middleware.UserLanguageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -135,6 +139,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework_api_key.permissions.HasAPIKey',
 
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -192,17 +197,20 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:9000",
 ]
 
-# sending email settings
+# Sending email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-DOMAIN_NAME = 'http://127.0.0.1:8000'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = '2525'
-# EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'coopquegroup@gmail.com'
 
+EMAIL_HOST_PASSWORD = 'whqffxthvbvnkvnt'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-REDIS_HOST = '127.0.0.1'
+# DRF API Logger
+# https://github.com/vishalanandl177/DRF-API-Logger
+DRF_API_LOGGER_DATABASE = True
+
+REDIS_HOST = '0.0.0.0'
 REDIS_PORT = '6379'
 
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'

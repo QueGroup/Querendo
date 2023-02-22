@@ -6,24 +6,13 @@ import django
 
 django.setup()
 
-from src.profiles.models import Gender, InterestedInGender, RelationshipType, Interests, PersonalityType, Education, \
+from src.profiles.models import RelationshipType, Interests, PersonalityType, Education, \
     ZodiacSign, QueUser
 
 import pytest
 
 
 class TestProfileModel(TestCase):
-    @pytest.mark.django_db
-    def test_gender_model(self):
-        gender = Gender.objects.create(name='M')
-        assert str(gender) == 'M'
-
-    @pytest.mark.django_db
-    def test_interested_in_gender_model(self):
-        gender = Gender.objects.create(name='M')
-        interested_in_gender = InterestedInGender.objects.create(gender_id=gender)
-        assert str(interested_in_gender) == 'M'
-
     @pytest.mark.django_db
     def test_relationship_type_model(self):
         relationship_type = RelationshipType.objects.create(relation_goals='S')

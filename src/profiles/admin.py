@@ -1,8 +1,9 @@
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
+from rest_framework_api_key.admin import APIKeyModelAdmin
 
-from .models import QueUser, SocialLink, Education, InterestedInGender, UserPhoto
+from .models import QueUser, SocialLink, Education, UserAPIKeyModel
 
 
 @admin.register(QueUser)
@@ -17,31 +18,21 @@ class QueUserAdmin(UserAdmin):
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (_('Info'),
          {'fields': (
-             'phone', "smart_photos", "birthday", "city",
-             "bio")}),
+             'phone', 'smart_photos', 'birthday', 'city',
+             'bio', 'gender', 'is_verified')}),
     )
 
 
 @admin.register(SocialLink)
 class SocialLinkAdmin(admin.ModelAdmin):
-    list_display = ("user_account_id", "spotify", "instagram")
-
-
-# @admin.register(Gender)
-# class GenderAdmin(admin.ModelAdmin):
-#     list_display = ('gender',)
-
-
-@admin.register(InterestedInGender)
-class InterestedInGenderAdmin(admin.ModelAdmin):
-    list_display = ('gender',)
+    list_display = ('spotify', 'instagram')
 
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('education',)
 
 
-@admin.register(UserPhoto)
-class UserPhotoAdmin(admin.ModelAdmin):
-    list_display = ('user_account_id', 'photo',)
+@admin.register(UserAPIKeyModel)
+class UserAPIKeyBModelAdmin(APIKeyModelAdmin):
+    pass

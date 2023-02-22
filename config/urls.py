@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from config import settings
+# from src import profiles
 
 urlpatterns = [
     path('admin/', admin.site.urls),
